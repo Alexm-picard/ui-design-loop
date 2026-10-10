@@ -1,0 +1,17 @@
+{
+  "name": "ui-design-loop",
+  "owner": {
+    "name": "Alex Picard",
+    "url": "https://github.com/Alexm-picard"
+  },
+  "metadata": {
+    "description": "The ui-design-loop plugin for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "ui-design-loop",
+      "source": "./",
+      "description": "Claude + Stitch proposals for a screen, a synthesis spec behind an approval gate, code, and Playwright verification with a multi-skill critique."
+    }
+  ]
+}

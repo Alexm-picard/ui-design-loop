@@ -1,0 +1,13 @@
+{
+  "name": "ui-design-loop",
+  "version": "1.0.0",
+  "description": "A multi-model UI design loop for Claude Code: a Claude proposal and a Google Stitch proposal for a screen, you pick what you like from each, an approved synthesis spec, then code verified with Playwright screenshots and a multi-skill design critique.",
+  "author": {
+    "name": "Alex Picard",
+    "url": "https://github.com/Alexm-picard"
+  },
+  "homepage": "https://github.com/Alexm-picard/ui-design-loop",
+  "repository": "https://github.com/Alexm-picard/ui-design-loop",
+  "license": "MIT",
+  "keywords": ["design", "ui", "frontend", "stitch", "playwright", "design-review"]
+}
