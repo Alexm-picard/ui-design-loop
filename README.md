@@ -24,11 +24,17 @@ the disagreement with alternatives and lets you decide.
 /plugin install ui-design-loop@ui-design-loop
 ```
 
-### Stitch API key (an env file)
+### Stitch API key
 
-Create an API key in your Stitch account settings at <https://stitch.withgoogle.com>, then put it in
-an env file. The plugin reads it from there, so nothing goes in your shell profile or in a
-repository:
+Create an API key in your Stitch account settings at <https://stitch.withgoogle.com>. The plugin
+looks for it in this order and uses the first one it finds:
+
+1. `STITCH_API_KEY` in the shell Claude Code was started from
+2. `STITCH_API_KEY=` in `.ui-design-loop.env` at the project root (one project; keep it out of git)
+3. `STITCH_API_KEY=` in `~/.config/ui-design-loop/.env` (every project)
+
+If you already export `STITCH_API_KEY` in your shell, there's nothing more to do. Otherwise use an
+env file:
 
 ```sh
 mkdir -p ~/.config/ui-design-loop
@@ -41,9 +47,7 @@ chmod 600 ~/.config/ui-design-loop/.env
 STITCH_API_KEY=your-key-here
 ```
 
-That file serves every project. To use a different key in one project, put a
-`.ui-design-loop.env` file at that project's root instead (and add it to that project's
-`.gitignore`); it takes precedence. [`.env.example`](.env.example) lists every setting.
+[`.env.example`](.env.example) lists every setting.
 
 Restart Claude Code, then check `/mcp`: `stitch` and `playwright` should be connected. Without a key
 the loop still runs: it says Stitch is unavailable and writes a second, deliberately different Claude
@@ -101,7 +105,7 @@ screenshots with the critique.
 | `templates/design-profile.md` | The profile template |
 | `examples/safedrop-design-profile.md` | A filled-in profile for a real project |
 | `.mcp.json` | The Stitch and Playwright MCP servers the loop drives |
-| `scripts/stitch-headers.mjs` | Reads the Stitch key from your env file for each request |
+| `scripts/stitch-headers.mjs` | Finds the Stitch key (shell, then env files) for each request |
 | `.env.example` | Every setting the env file can hold |
 | `.claude-plugin/` | Plugin and marketplace manifests |
 
@@ -118,7 +122,7 @@ screenshots with the critique.
 
 | Symptom | Fix |
 | --- | --- |
-| Stitch tools fail with 401 or 403 | No key found. Check `~/.config/ui-design-loop/.env` (or the project's `.ui-design-loop.env`) has a `STITCH_API_KEY=` line, then restart Claude Code. |
+| Stitch tools fail with 401 or 403 | No key found, or the one found is wrong. A shell `STITCH_API_KEY` wins over the env files, so check `echo $STITCH_API_KEY` first, then the project's `.ui-design-loop.env`, then `~/.config/ui-design-loop/.env`. Restart Claude Code after any change. |
 | Stitch fails to start at all | The key helper needs Node.js on your `PATH` (`node --version`). |
 | Stitch takes minutes | That's normal for Stitch. The loop polls instead of retrying, for up to about five minutes. |
 | Playwright can't find a browser | Run `npx playwright install chromium` once. |

@@ -25,7 +25,7 @@ If it does not exist, stop and say so: the user should run `/design-init` (or co
   was installed (`mcp__stitch__…` or `mcp__plugin_ui-design-loop_stitch__…`); use whichever exists.
 - **Playwright MCP**: `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`,
   `browser_resize`, `browser_take_screenshot`, `browser_console_messages`, `browser_run_code_unsafe`.
-- If Stitch is unavailable (no key in the env file, or the server is down), say so and write a second,
+- If Stitch is unavailable (no key in the shell or the env files, or the server is down), say so and write a second,
   deliberately different Claude proposal in its place. If the Playwright MCP is unavailable, run a
   Playwright Node script from Bash instead. Never skip verification.
 

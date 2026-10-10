@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 (2026-10-10)
+
+- `STITCH_API_KEY` set in your shell now wins; the env files (`<project>/.ui-design-loop.env`, then
+  `~/.config/ui-design-loop/.env`) are the fallback.
+- The secret scan also recognises Stitch-style `AQ.` keys.
+
 ## 1.1.0 (2026-10-10)
 
 - The Stitch API key now comes from an env file, `~/.config/ui-design-loop/.env` or a project's

@@ -1,6 +1,6 @@
 {
   "name": "ui-design-loop",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A multi-model UI design loop for Claude Code: a Claude proposal and a Google Stitch proposal for a screen, you pick what you like from each, an approved synthesis spec, then code verified with Playwright screenshots and a multi-skill design critique.",
   "author": {
     "name": "Alex Picard",

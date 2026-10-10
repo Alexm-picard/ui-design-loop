@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // Claude Code runs this as the Stitch MCP server's `headersHelper`: it prints the request headers as
-// JSON. The API key comes from an env file, never from the plugin itself:
+// JSON. The API key is never stored in the plugin itself. It is looked for, in order:
 //
-//   1. <your project>/.ui-design-loop.env      (per-project override; keep it out of git)
-//   2. ~/.config/ui-design-loop/.env           (one key for every project)
+//   1. STITCH_API_KEY in the shell environment Claude Code was started from
+//   2. <your project>/.ui-design-loop.env      (per-project; keep it out of git)
+//   3. ~/.config/ui-design-loop/.env           (one key for every project)
 //
-// The first file that sets STITCH_API_KEY wins. With no key it prints {} and Stitch answers 401,
-// which the loop treats as "Stitch unavailable" and carries on with two Claude proposals.
+// The first non-empty value wins. With no key it prints {} and Stitch answers 401, which the loop
+// treats as "Stitch unavailable" and carries on with two Claude proposals.
 import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
@@ -32,8 +33,9 @@ function parse(text) {
   return out;
 }
 
-let key = '';
-for (const file of candidates) {
+// A shell variable wins; the env files are the fallback.
+let key = (process.env.STITCH_API_KEY ?? '').trim();
+for (const file of key ? [] : candidates) {
   if (!existsSync(file)) continue;
   key = parse(readFileSync(file, 'utf8')).STITCH_API_KEY ?? '';
   if (key) break;

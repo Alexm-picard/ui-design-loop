@@ -31,7 +31,7 @@ for (const dir of ['agents', 'commands']) {
   }
 }
 
-const SECRET = /(AIza[0-9A-Za-z_-]{30,}|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{30,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/;
+const SECRET = /(AIza[0-9A-Za-z_-]{30,}|AQ\.[0-9A-Za-z_-]{30,}|sk-[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{30,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)/;
 const walk = (dir) => {
   for (const name of readdirSync(dir)) {
     if (name === '.git' || name === 'node_modules') continue;
