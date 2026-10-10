@@ -4,3 +4,4 @@ node_modules/
 .env
 .env.*
 .ui-design-loop.env
+!.env.example
