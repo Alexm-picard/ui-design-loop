@@ -3,9 +3,7 @@
     "stitch": {
       "type": "http",
       "url": "https://stitch.googleapis.com/mcp",
-      "headers": {
-        "X-Goog-Api-Key": "${STITCH_API_KEY}"
-      }
+      "headersHelper": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/stitch-headers.mjs\""
     },
     "playwright": {
       "command": "npx",

@@ -24,19 +24,30 @@ the disagreement with alternatives and lets you decide.
 /plugin install ui-design-loop@ui-design-loop
 ```
 
-Restart Claude Code, then check `/mcp`: `stitch` and `playwright` should be connected.
-
-### Stitch API key
+### Stitch API key (an env file)
 
 Create an API key in your Stitch account settings at <https://stitch.withgoogle.com>, then put it in
-your shell profile (`~/.zshrc`, `~/.bashrc`), never in a repository:
+an env file. The plugin reads it from there, so nothing goes in your shell profile or in a
+repository:
 
 ```sh
-export STITCH_API_KEY="your-key-here"
+mkdir -p ~/.config/ui-design-loop
+cp .env.example ~/.config/ui-design-loop/.env     # or create it by hand
+chmod 600 ~/.config/ui-design-loop/.env
 ```
 
-Open a new terminal before starting Claude Code. Without a key the loop still runs: it says Stitch is
-unavailable and writes a second, deliberately different Claude proposal instead.
+```dotenv
+# ~/.config/ui-design-loop/.env
+STITCH_API_KEY=your-key-here
+```
+
+That file serves every project. To use a different key in one project, put a
+`.ui-design-loop.env` file at that project's root instead (and add it to that project's
+`.gitignore`); it takes precedence. [`.env.example`](.env.example) lists every setting.
+
+Restart Claude Code, then check `/mcp`: `stitch` and `playwright` should be connected. Without a key
+the loop still runs: it says Stitch is unavailable and writes a second, deliberately different Claude
+proposal instead.
 
 ### Optional design skills
 
@@ -68,8 +79,8 @@ it couldn't find as `TODO:` for you. You can also copy [`templates/design-profil
 and fill it in by hand; [`examples/safedrop-design-profile.md`](examples/safedrop-design-profile.md)
 is a complete one.
 
-Never put real passwords in the profile. Name the environment variables the loop should read for
-sign-in instead.
+Never put real passwords in the profile. Put a sign-in account in the same env file
+(`DESIGN_LOOP_EMAIL`, `DESIGN_LOOP_PASSWORD`) and have the profile point there.
 
 **2. Start your app**, then run the loop on a screen:
 
@@ -90,6 +101,8 @@ screenshots with the critique.
 | `templates/design-profile.md` | The profile template |
 | `examples/safedrop-design-profile.md` | A filled-in profile for a real project |
 | `.mcp.json` | The Stitch and Playwright MCP servers the loop drives |
+| `scripts/stitch-headers.mjs` | Reads the Stitch key from your env file for each request |
+| `.env.example` | Every setting the env file can hold |
 | `.claude-plugin/` | Plugin and marketplace manifests |
 
 ## Hard rules the loop follows
@@ -105,7 +118,8 @@ screenshots with the critique.
 
 | Symptom | Fix |
 | --- | --- |
-| Stitch tools fail with 401 or 403 | `STITCH_API_KEY` is unset in the shell that started Claude Code. Check with `echo $STITCH_API_KEY`, then restart Claude Code. |
+| Stitch tools fail with 401 or 403 | No key found. Check `~/.config/ui-design-loop/.env` (or the project's `.ui-design-loop.env`) has a `STITCH_API_KEY=` line, then restart Claude Code. |
+| Stitch fails to start at all | The key helper needs Node.js on your `PATH` (`node --version`). |
 | Stitch takes minutes | That's normal for Stitch. The loop polls instead of retrying, for up to about five minutes. |
 | Playwright can't find a browser | Run `npx playwright install chromium` once. |
 | Two `stitch` or `playwright` servers in `/mcp` | You also configured them yourself. Either works; disable one in `/mcp` if you like. |

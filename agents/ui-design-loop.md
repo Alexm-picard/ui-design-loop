@@ -25,7 +25,7 @@ If it does not exist, stop and say so: the user should run `/design-init` (or co
   was installed (`mcp__stitch__…` or `mcp__plugin_ui-design-loop_stitch__…`); use whichever exists.
 - **Playwright MCP**: `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`,
   `browser_resize`, `browser_take_screenshot`, `browser_console_messages`, `browser_run_code_unsafe`.
-- If Stitch is unavailable (no `STITCH_API_KEY`, or the server is down), say so and write a second,
+- If Stitch is unavailable (no key in the env file, or the server is down), say so and write a second,
   deliberately different Claude proposal in its place. If the Playwright MCP is unavailable, run a
   Playwright Node script from Bash instead. Never skip verification.
 
@@ -118,8 +118,10 @@ Show the spec as markdown and wait for an explicit "approve". Do NOT write code 
 
 ### Phase 5: Verify with Playwright, then critique
 
-1. Start the app as the profile says, and sign in as the profile says (credentials come from the
-   profile or from environment variables it names; never invent or hard-code them).
+1. Start the app as the profile says, and sign in as the profile says. Credentials come from where the
+   profile points: usually `DESIGN_LOOP_EMAIL` / `DESIGN_LOOP_PASSWORD` in the env file
+   (`.ui-design-loop.env` at the project root, else `~/.config/ui-design-loop/.env`). Never invent,
+   hard-code, print or repeat them in your output.
 2. Screenshot the screen at every width the profile lists (default 1280, 768 and 375 px), as every
    role whose view differs. At each width check `document.documentElement.scrollWidth > innerWidth`:
    the page must never scroll sideways.

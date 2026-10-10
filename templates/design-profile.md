@@ -3,7 +3,8 @@
 <!--
 Copy to .claude/design-profile.md in your repository (or run /design-init to draft it).
 The ui-design-loop reads this file before every run and treats it as binding.
-Never put real passwords or API keys here: name the environment variables to read instead.
+Never put real passwords or API keys here: keep them in the env file (.ui-design-loop.env or
+~/.config/ui-design-loop/.env) and point to it.
 -->
 
 ## Product
@@ -61,7 +62,7 @@ Never put real passwords or API keys here: name the environment variables to rea
 
 - Start command(s) and URLs:
 - Seed or demo data:
-- Sign-in: <!-- e.g. "read DESIGN_LOOP_EMAIL / DESIGN_LOOP_PASSWORD", or "see README → Demo accounts" -->
+- Sign-in: <!-- e.g. "DESIGN_LOOP_EMAIL / DESIGN_LOOP_PASSWORD from the env file", or "see README → Demo accounts" -->
 - Roles whose views differ, and how to sign in as each:
 - Gotchas (rate limits, services that need restarting…):
 
